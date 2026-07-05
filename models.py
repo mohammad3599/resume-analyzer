@@ -1,19 +1,21 @@
-from pydantic import BaseModel
-from typing import Optional
+from dataclasses import dataclass
+from typing import Optional, List
 
-class ResumeRequest(BaseModel):
+@dataclass
+class ResumeRequest:
     resume_text: str
 
-class ResumeResponse(BaseModel):
+@dataclass
+class ResumeResponse:
     score: int
-    match_score: int  # درصد تطابق
-    strengths: list[str]
-    weaknesses: list[str]
-    missing_skills: list[str]  # مهارت‌های缺失
-    suggestions: list[str]
-    suggested_roles: list[str]
-    career_level: str  # Junior, Mid, Senior, Lead
+    match_score: int
+    strengths: List[str]
+    weaknesses: List[str]
+    missing_skills: List[str]
+    suggestions: List[str]
+    suggested_roles: List[str]
+    career_level: str
     summary: str
-    technical_skills: list[str]
-    soft_skills: list[str]
+    technical_skills: List[str]
+    soft_skills: List[str]
     years_experience: Optional[float] = None
