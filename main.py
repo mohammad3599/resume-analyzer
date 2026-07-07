@@ -9,15 +9,28 @@ import shutil
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# ==============================
+#  برنامه FastAPI با docs_url فعال
+# ==============================
 app = FastAPI(
     title="Resume Analyzer API",
     description="تحلیل هوشمند رزومه با استفاده از AI",
-    version="2.0.0"
+    version="2.0.0",
+    docs_url="/docs",        # ← این خط رو حتماً داشته باش
+    redoc_url="/redoc"       # ← این خط رو هم داشته باش (اختیاری)
 )
+
+# ==============================
+#  اندپوینت‌ها
+# ==============================
 
 @app.get("/")
 def root():
-    return {"message": "🚀 Resume Analyzer API is running!", "docs": "/docs", "health": "/health"}
+    return {
+        "message": "🚀 Resume Analyzer API is running!",
+        "docs": "/docs",
+        "health": "/health"
+    }
 
 @app.get("/health")
 def health_check():
