@@ -10,14 +10,12 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ==============================
-#  برنامه FastAPI با docs_url فعال
+#  برنامه FastAPI بدون docs_url
 # ==============================
 app = FastAPI(
     title="Resume Analyzer API",
     description="تحلیل هوشمند رزومه با استفاده از AI",
-    version="2.0.0",
-    docs_url="/docs",        # ← این خط رو حتماً داشته باش
-    redoc_url="/redoc"       # ← این خط رو هم داشته باش (اختیاری)
+    version="2.0.0"
 )
 
 # ==============================
@@ -28,9 +26,17 @@ app = FastAPI(
 def root():
     return {
         "message": "🚀 Resume Analyzer API is running!",
-        "docs": "/docs",
+        "swagger": "/swagger",      # ← مسیر جایگزین
         "health": "/health"
     }
+
+@app.get("/swagger")
+def swagger_ui():
+    from fastapi.openapi.docs import get_swagger_ui_html
+    return get_swagger_ui_html(
+        openapi_url="/openapi.json",
+        title="Resume Analyzer API"
+    )
 
 @app.get("/health")
 def health_check():
